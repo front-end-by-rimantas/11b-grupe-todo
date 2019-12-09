@@ -1,0 +1,12 @@
+.status {
+  display: -ms-grid;
+  display: grid;
+  grid-area: status;
+  background-color: #fff;
+  background-color: aquamarine;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 80px;
+  height: 60px;
+}

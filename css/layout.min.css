@@ -1,0 +1,1 @@
+body{display:-ms-grid;display:grid;-ms-grid-columns:80px 1fr 1fr 1fr 1fr;grid-template-columns:80px 1fr 1fr 1fr 1fr;grid-template-areas:"aside header header header header" "aside status status status status" "aside todo todo todo todo"}

@@ -1,0 +1,24 @@
+.todo {
+    display: grid;
+    padding: 0 20px;
+    grid-area: todo;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 140px;
+
+    .list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+        > .card {
+            display: grid;
+            height: 200px;
+            background-color: salmon;
+
+            &:hover {
+                background: yellow;
+            }
+        }
+    }
+}

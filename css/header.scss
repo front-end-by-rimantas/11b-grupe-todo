@@ -1,0 +1,55 @@
+header {
+    display: grid;
+    padding: 10px;
+    grid-area: header;
+    grid-template-columns: 50% 1fr 60px 240px;
+    grid-template-areas:
+        "search . notifications user";
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 80px;
+    background-color: #fff;
+
+    input {
+        display: inline-block;
+        grid-area: search;
+        height: 40px;
+    }
+
+    .notifications {
+        display: inline-block;
+        grid-area: notifications;
+        width: 40px;
+        height: 40px;
+        background-color: yellow;
+        position: relative;
+
+        &.show::after {
+            display: inline-block;
+            content: '';
+            height: 10px;
+            width: 10px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+        }
+    }
+
+    .user {
+        grid-area: user;
+
+        img {
+
+        }
+
+        .name {
+
+        }
+
+        .fa {
+
+        }
+    }
+}
