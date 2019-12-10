@@ -1,0 +1,80 @@
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    &.show {
+        display: inline-block;
+    }
+
+    .background {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background-color: #0008;
+    }
+
+    form {
+        display: grid;
+        width: 400px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        
+        h3 {
+            display: inline-block;
+            width: 100%;
+        }
+
+        input {
+            display: inline-block;
+            width: 100%;
+            padding: 5px;
+            line-height: 30px;
+            font-size: 24px;
+            border: none;
+            border-bottom: 2px solid #36f;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-items: start;	
+
+            .btn {
+                display: grid;
+                padding: 5px 20px;
+                background-color: #0c3;
+                color: #fff;
+                font-size: 20px;
+                line-height: 30px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    box-shadow: 0 1px 4px #0005;
+                }
+
+                &:nth-of-type(2) {
+                    justify-self: right;
+                    background-color: #eee;
+                    color: #555;
+
+                    &:hover {
+                        background-color: #f00;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

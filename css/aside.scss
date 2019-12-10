@@ -1,9 +1,46 @@
 aside {
     display: grid;
     grid-area: aside;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 60px 1fr;
     background-color: pink;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
+
+    .logo {
+        display: inline-block;
+        margin: 10px;
+        width: 40px;
+        height: 40px;
+        background-color: blue;
+    }
+
+    .add-task {
+        display: inline-block;
+        margin: 10px;
+        width: 40px;
+        height: 40px;
+        background-color: #36f;
+        color: #fff;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    nav {
+        display: grid;
+        align-content: center;
+
+        a {
+            display: inline-block;
+            margin: 10px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+        }
+    }
 }

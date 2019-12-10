@@ -1,0 +1,88 @@
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.lightbox.show {
+  display: inline-block;
+}
+
+.lightbox .background {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: #0008;
+}
+
+.lightbox form {
+  display: -ms-grid;
+  display: grid;
+  width: 400px;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.lightbox form h3 {
+  display: inline-block;
+  width: 100%;
+}
+
+.lightbox form input {
+  display: inline-block;
+  width: 100%;
+  padding: 5px;
+  line-height: 30px;
+  font-size: 24px;
+  border: none;
+  border-bottom: 2px solid #36f;
+}
+
+.lightbox form .actions {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  justify-items: start;
+}
+
+.lightbox form .actions .btn {
+  display: -ms-grid;
+  display: grid;
+  padding: 5px 20px;
+  background-color: #0c3;
+  color: #fff;
+  font-size: 20px;
+  line-height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lightbox form .actions .btn:hover {
+  -webkit-box-shadow: 0 1px 4px #0005;
+          box-shadow: 0 1px 4px #0005;
+}
+
+.lightbox form .actions .btn:nth-of-type(2) {
+  -ms-grid-column-align: right;
+      justify-self: right;
+  background-color: #eee;
+  color: #555;
+}
+
+.lightbox form .actions .btn:nth-of-type(2):hover {
+  background-color: #f00;
+  color: #fff;
+}

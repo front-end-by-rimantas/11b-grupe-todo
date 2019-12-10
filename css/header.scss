@@ -11,10 +11,46 @@ header {
     left: 80px;
     background-color: #fff;
 
-    input {
+    .search {
         display: inline-block;
         grid-area: search;
         height: 40px;
+        position: relative;
+
+        &::before {
+            display: inline-block;
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 3px solid #ccc;
+            position: absolute;
+            top: 8px;
+            left: 18px;
+            border-radius: 50%;
+        }
+        &::after {
+            display: inline-block;
+            content: '';
+            width: 8px;
+            height: 3px;
+            background-color: #ccc;
+            position: absolute;
+            top: 25px;
+            left: 33px;
+            transform: rotate(45deg);
+        }
+
+        input {
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+            padding: 5px 10px 5px 80px;
+            font-size: 24px;
+            line-height: 30px;
+            border-radius: 20px;
+            border: 1px solid #36f;
+            outline: none;
+        }
     }
 
     .notifications {

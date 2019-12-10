@@ -15,15 +15,32 @@
   -ms-grid-columns: 1fr;
       grid-template-columns: 1fr;
   gap: 20px;
+  -ms-flex-line-pack: start;
+      align-content: start;
 }
 
 .todo .list > .card {
   display: -ms-grid;
   display: grid;
-  height: 200px;
+  padding: 20px;
   background-color: salmon;
+  font-size: 20px;
+  line-height: 40px;
+  color: #fff;
+  position: relative;
 }
 
 .todo .list > .card:hover {
   background: yellow;
+}
+
+.todo .list > .card span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px 10px;
+  background-color: #555;
+  color: #fff;
+  font-size: 12px;
+  line-height: 15px;
 }
