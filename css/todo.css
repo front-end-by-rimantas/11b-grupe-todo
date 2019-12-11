@@ -28,10 +28,7 @@
   line-height: 40px;
   color: #fff;
   position: relative;
-}
-
-.todo .list > .card:hover {
-  background: yellow;
+  word-break: break-all;
 }
 
 .todo .list > .card span {
@@ -43,4 +40,20 @@
   color: #fff;
   font-size: 12px;
   line-height: 15px;
+}
+
+.todo .list > .card span.remove {
+  display: none;
+  left: auto;
+  right: 0;
+  background-color: red;
+  cursor: pointer;
+}
+
+.todo .list > .card:hover {
+  background: yellow;
+}
+
+.todo .list > .card:hover .remove {
+  display: inline-block;
 }

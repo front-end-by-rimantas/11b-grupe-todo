@@ -19,20 +19,34 @@ class Todo {
     }
 
     setIndex ( data ) {
+        // is isores gauti duomenys
         if ( data ) {
             if ( data.lastTaskID ) {
                 return data.lastTaskID;
             }
         }
+        // localStorage esantys duomenys
+        if ( localStorage.getItem('11b-todo-task-lastTaskID') ) {
+            return JSON.parse( localStorage.getItem('11b-todo-task-lastTaskID') )
+        }
+        // jei nieko neturim, tai default
         return 0;
     }
 
     setInitialList ( data ) {
+        // is isores gauti duomenys
         if ( data ) {
             if ( data.list ) {
                 return data.list;
             }
         }
+
+        // localStorage esantys duomenys
+        if ( localStorage.getItem('11b-todo-task-list') ) {
+            return JSON.parse( localStorage.getItem('11b-todo-task-list') )
+        }
+
+        // jei nieko neturim, tai default
         return [
             {
                 listName: 'Todo',
@@ -147,7 +161,13 @@ class Todo {
             taskID: this.lastIndex,
             title: text
         }
+        console.log(task);
+        
         this.tasks[0].tasks = [task, ...this.tasks[0].tasks];
+
+        localStorage.setItem('11b-todo-task-lastTaskID', this.lastIndex)
+        localStorage.setItem('11b-todo-task-list', JSON.stringify(this.tasks));
+        
         this.DOMtodo.insertAdjacentHTML('afterbegin', this.renderTask( task ));
         this.updateStatus();
     }
@@ -251,6 +271,7 @@ class Todo {
         let HTML = `
         <div class="card">
             <span class="task-id">${data.taskID}</span>
+            <span class="remove">x</span>
             ${data.title}
         </div>`;
         return HTML;
