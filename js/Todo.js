@@ -1,6 +1,8 @@
 class Todo {
     constructor ( target, data ) {
+        this.data = data;
         this.DOM = document.querySelector(target);
+        this.DOMasideCharts = null;
         this.DOMstatus = null;
         this.DOMtodo = null;
         this.DOMinProgress = null;
@@ -10,13 +12,48 @@ class Todo {
         this.DOMform = null;
         this.DOMinput = null;
 
-        this.lastIndex = data.lastTaskID;
-        this.tasks = data.list;
+        this.lastIndex = this.setIndex(data);
+        this.tasks = this.setInitialList(data);
 
         this.init( this.tasks );
     }
 
-    init ( data ) {
+    setIndex ( data ) {
+        if ( data ) {
+            if ( data.lastTaskID ) {
+                return data.lastTaskID;
+            }
+        }
+        return 0;
+    }
+
+    setInitialList ( data ) {
+        if ( data ) {
+            if ( data.list ) {
+                return data.list;
+            }
+        }
+        return [
+            {
+                listName: 'Todo',
+                tasks: []
+            },
+            {
+                listName: 'In progress',
+                tasks: []
+            },
+            {
+                listName: 'Review',
+                tasks: []
+            },
+            {
+                listName: 'Done',
+                tasks: []
+            }
+        ];
+    }
+
+    init () {
         this.DOM.classList.add('todo-app');
 
         let HTML = `
@@ -24,11 +61,11 @@ class Todo {
                 <div class="logo"></div>
                 <div class="add-task">+</div>
                 <nav>
-                    <a href="#">A</a>
-                    <a href="#">B</a>
-                    <a href="#">C</a>
-                    <a href="#">D</a>
-                    <a href="#">E</a>
+                    <div id="aside_charts">Charts</div>
+                    <div>B</div>
+                    <div>C</div>
+                    <div>D</div>
+                    <div>E</div>
                 </nav>
             </aside>
             <header>
@@ -61,20 +98,15 @@ class Todo {
                 </div>
             </div>
             <div class="todo">
-                ${this.renderLists( data )}
+                ${this.renderLists( this.data )}
             </div>
             <div class="lightbox">
                 <div class="background"></div>
-                <form>
-                    <h3>Task title</h3>
-                    <input type="text" placeholder="Your task...">
-                    <div class="actions">
-                        <div class="btn btn-save">Save</div>
-                        <div class="btn btn-cancel">Cancel</div>
-                    </div>
-                </form>
+                <div class="content"></div>
             </div>`;
         this.DOM.innerHTML = HTML;
+        
+        this.DOMasideCharts = this.DOM.querySelector('#aside_charts');
         this.DOMstatus = this.DOM.querySelectorAll('.status .value');
 
         this.DOMtodo = this.DOM.querySelector('.list:nth-of-type(1)');
@@ -83,21 +115,26 @@ class Todo {
         this.DOMdone = this.DOM.querySelector('.list:nth-of-type(4)');
 
         this.DOMlightbox = this.DOM.querySelector('.lightbox');
-        this.DOMform = this.DOMlightbox.querySelector('form');
-        this.DOMinput = this.DOMform.querySelector('input');
+        this.DOMlightboxContent = this.DOMlightbox.querySelector('.content');
+
+        this.DOMasideCharts.addEventListener('click', () => {
+            this.DOMlightbox.classList.add('show');
+            this.renderChart();
+        })
 
         this.DOM.querySelector('.add-task').addEventListener('click', () => {
             this.DOMlightbox.classList.add('show');
+            this.renderNewTaskForm();
         })
 
-        this.DOMform.querySelector('.btn-save').addEventListener('click', () => {
-            this.createNewTask();
+        this.DOMlightbox.querySelector('.background').addEventListener('click', () => {
             this.DOMlightbox.classList.remove('show');
-            this.DOMinput.value = '';
         })
 
-        this.DOMform.querySelector('.btn-cancel').addEventListener('click', () => {
-            this.DOMlightbox.classList.remove('show');
+        window.addEventListener('keydown', (e) => {
+            if ( e.keyCode === 27 ) {
+                this.DOMlightbox.classList.remove('show');
+            }
         })
 
         this.updateStatus();
@@ -115,12 +152,95 @@ class Todo {
         this.updateStatus();
     }
 
-    renderLists ( data ) {
+    renderNewTaskForm () {
+        const HTML = `
+        <form>
+            <h3>Task title</h3>
+            <input type="text" placeholder="Your task...">
+            <div class="actions">
+                <div class="btn btn-save">Save</div>
+                <div class="btn btn-cancel">Cancel</div>
+            </div>
+        </form>`;
+        
+        this.DOMlightboxContent.innerHTML = HTML;
+        this.DOMform = this.DOMlightbox.querySelector('form');
+        this.DOMinput = this.DOMform.querySelector('input');
+
+        this.DOMform.querySelector('.btn-save').addEventListener('click', () => {
+            this.createNewTask();
+            this.DOMlightbox.classList.remove('show');
+            this.DOMinput.value = '';
+        })
+
+        this.DOMform.querySelector('.btn-cancel').addEventListener('click', () => {
+            this.DOMlightbox.classList.remove('show');
+        })
+    }
+
+    renderChart () {
+        const HTML = `
+        <div id="chart_container">
+            CHART
+        </div>`;
+        
+        this.DOMlightboxContent.innerHTML = HTML;
+
+        Highcharts.chart('chart_container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Task completion'
+            },
+            // tooltip: {
+            //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            // },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        // format: '<b>{point.name}</b>: {point.percentage:.0f} %'
+                        format: '<b>{point.name}</b>: {point.y:.0f}'
+                    }
+                }
+            },
+            series: [{
+                name: 'Categories',
+                colorByPoint: true,
+                data: [{
+                    name: 'Todo',
+                    y: this.tasks[0].tasks.length,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'In progress',
+                    y: this.tasks[1].tasks.length
+                }, {
+                    name: 'Review',
+                    y: this.tasks[2].tasks.length
+                }, {
+                    name: 'Done',
+                    y: this.tasks[3].tasks.length
+                }]
+            }],
+            credits: {
+                enabled: false
+            }
+        });
+    }
+
+    renderLists () {
         let HTML = '';
-        for ( let i=0; i<data.length; i++ ) {
+        for ( let i=0; i<this.tasks.length; i++ ) {
             HTML += '<div class="list">';
-                for ( let t=0; t<data[i].tasks.length; t++ ) {
-                    HTML += this.renderTask( data[i].tasks[t] );
+                for ( let t=0; t<this.tasks[i].tasks.length; t++ ) {
+                    HTML += this.renderTask( this.tasks[i].tasks[t] );
                 }
             HTML += '</div>';
         }

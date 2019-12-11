@@ -35,12 +35,13 @@ aside {
         display: grid;
         align-content: center;
 
-        a {
+        div {
             display: inline-block;
             margin: 10px;
             width: 40px;
             height: 40px;
             text-align: center;
+            cursor: pointer;
         }
     }
 }
